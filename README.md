@@ -65,6 +65,12 @@ http://localhost:5005/swagger/index.html
 
 Para executar o Gateway e os micro serviços via VSCODE, abra uma nova aba do terminal para cada um deles e execute `dotnet run`
 
+Para criar um novo projeto, especificar a versão do framework
+`dotnet new classlib -f netcoreapp3.1 -o NovoProjeto`
+
+Para adicionar referência de um projeto em outro:
+`dotnet add reference ../Project1.Api/Project1.Api.csproj`
+
 # Referências
 
 O código é o mesmo deste artigo, mas modificado para executar em HTTP e um ajuste para carregar o xml do Swagger:
@@ -75,3 +81,8 @@ https://medium.com/bright-days/basic-docker-image-dockerfile-sql-server-with-cus
 
 Para utilizar em HTTPS:
 https://learn.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-7.0&tabs=visual-studio%2Clinux-ubuntu
+
+Mensageria:
+https://www.macoratti.net/21/04/net_masstrans1.htm
+
+https://codewithmukesh.com/blog/rabbitmq-with-aspnet-core-microservice/
