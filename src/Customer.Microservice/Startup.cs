@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Customer.Microservice.Consumer;
 using Customer.Microservice.Data;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -45,6 +47,23 @@ namespace Customer.Microservice
                 });
             });
             #endregion
+
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<CustomerConsumer>();
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
+                    cfg.Host(new Uri("rabbitmq://guest:guest@localhost"));
+                    cfg.ReceiveEndpoint("fila", ep =>
+                    {
+                        ep.PrefetchCount = 10;
+                        ep.UseMessageRetry(r => r.Interval(2, 100));
+                        ep.ConfigureConsumer<CustomerConsumer>(provider);
+                    });
+                }));
+            });
+            services.AddMassTransitHostedService();
+
             services.AddControllers();
         }
 

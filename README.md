@@ -22,6 +22,20 @@ docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=abcDEF123#" \
 -d mcr.microsoft.com/mssql/server:2017-latest
 ```
 
+# Configuração do RabbitMQ
+
+Para criar um container com nome some-rabbit-admin, expondo a porta 5672 para comunicação AMQP ou 15672 para utilizar o porta de administração:
+`docker run -d --hostname my-rabbit --name some-rabbit-admin -p 5672:5672 -p 15672:15672 rabbitmq:3.11-management`
+
+Usuário: guest
+Senha: guest
+
+Endereço do painel:
+http://localhost:15672/#/
+
+Mais infos:
+https://hub.docker.com/_/rabbitmq
+
 # Execução da migrations
 
 No projeto *Product* e *Customer*, execute:
@@ -36,10 +50,16 @@ Ele se comunica com o micro serviço *Product* que está exposto em HTTP na port
 E também se comunica com o micro serviço *Customer* que está em HTTP na porta 5005.
 
 Exemplos de uso:
+
 *GET* http://localhost:5007/gateway/product
 
 *GET* http://localhost:5007/gateway/customer
 
+Swagger:
+
+http://localhost:5003/swagger/index.html
+
+http://localhost:5005/swagger/index.html
 
 # Dica
 

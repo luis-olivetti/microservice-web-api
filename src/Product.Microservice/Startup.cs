@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -45,6 +46,17 @@ namespace Product.Microservice
                 });
             });
             #endregion
+
+            #region RabbitMQ
+            services.AddMassTransit(x =>
+            {
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
+                    {
+                        config.Host(new Uri("rabbitmq://guest:guest@localhost:5672"));
+                    }));
+            });
+            #endregion
+
             services.AddControllers();
             services.AddControllers();
         }
