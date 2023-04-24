@@ -39,7 +39,7 @@ namespace Customer.Microservice
             #region Swagger
             services.AddSwaggerGen(c =>
             {
-                c.IncludeXmlComments(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Customer.Microservice.xml"));
+                // c.IncludeXmlComments(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Customer.Microservice.xml"));
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
@@ -53,7 +53,7 @@ namespace Customer.Microservice
                 x.AddConsumer<CustomerConsumer>();
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                    cfg.Host(new Uri("rabbitmq://guest:guest@localhost"));
+                    cfg.Host(new Uri("rabbitmq://guest:guest@microservices_rabbitmq:5672"));
                     cfg.ReceiveEndpoint("fila", ep =>
                     {
                         ep.PrefetchCount = 10;
@@ -62,7 +62,6 @@ namespace Customer.Microservice
                     });
                 }));
             });
-            services.AddMassTransitHostedService();
 
             services.AddControllers();
         }

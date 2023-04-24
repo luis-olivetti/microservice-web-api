@@ -1,0 +1,29 @@
+version: '3.5'
+services:
+  customer-microservice:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: customer-microservice
+    links:
+      - sqlserver
+      - rabbitmq
+    ports:
+      - 5005:5005
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: microservices_sqlserver
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: abcDEF123#
+
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    # hostname: "rabbitmq"
+    container_name: microservices_rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
