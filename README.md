@@ -34,6 +34,7 @@ Instalação do Entity Framework
 Para acessar o painel do RabbitMQ, utilize os seguintes valores:
 
 **Usuário**: guest
+
 **Senha**: guest
 
 Endereço do painel:
@@ -64,15 +65,15 @@ http://localhost:5005/swagger/index.html (Customer)
 
 Para executar o gateway e os microsserviços via *VSCODE*, abra uma nova aba do terminal para cada um dos projetos e execute `dotnet run --launch-profile "Debug"`.
 
-Para criar um novo projeto, especifique a versão do framework 3.1:
+Para criar um novo projeto, especifique a versão do framework 3.1:</br>
 `dotnet new classlib -f netcoreapp3.1 -o NovoProjeto`
 
-Para adicionar referência de um projeto em outro:
+Para adicionar referência de um projeto em outro:</br>
 `dotnet add reference ../Project1.Api/Project1.Api.csproj`
 
 ### Referências utilizadas para o projeto
 
-O código é o mesmo deste artigo, mas modificado para executar em HTTP e um ajuste para carregar o xml do Swagger:
+O código de referência:
 https://codewithmukesh.com/blog/microservice-architecture-in-aspnet-core/
 
 Utilizado para configurar o SQL Server:
