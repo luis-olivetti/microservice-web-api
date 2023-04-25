@@ -52,7 +52,7 @@ namespace Product.Microservice
             {
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
                     {
-                        config.Host(new Uri("rabbitmq://guest:guest@microservices_rabbitmq:5672"));
+                        config.Host(new Uri(Configuration.GetValue<string>("RabbitMQ:host")));
                     }));
             });
             #endregion

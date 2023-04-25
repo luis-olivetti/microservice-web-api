@@ -53,7 +53,7 @@ namespace Customer.Microservice
                 x.AddConsumer<CustomerConsumer>();
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                    cfg.Host(new Uri("rabbitmq://guest:guest@microservices_rabbitmq:5672"));
+                    cfg.Host(new Uri(Configuration.GetValue<string>("RabbitMQ:host")));
                     cfg.ReceiveEndpoint("fila", ep =>
                     {
                         ep.PrefetchCount = 10;

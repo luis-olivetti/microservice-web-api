@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MassTransit;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Product.Microservice.Data;
+using Microsoft.Extensions.Configuration;
 using SharedModel;
 
 namespace Product.Microservice.Controllers
@@ -16,10 +12,12 @@ namespace Product.Microservice.Controllers
     public class ConsumerController : ControllerBase
     {
         private readonly IBus _bus;
+        private readonly IConfiguration _configuration;
 
-        public ConsumerController(IBus bus)
+        public ConsumerController(IBus bus, IConfiguration configuration)
         {
             _bus = bus;
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -27,7 +25,7 @@ namespace Product.Microservice.Controllers
         {
             if (customer != null)
             {
-                Uri uri = new Uri("rabbitmq://guest:guest@microservices_rabbitmq/fila");
+                Uri uri = new Uri(_configuration.GetValue<string>("RabbitMQ:host") + "/fila");
                 var endpoint = await _bus.GetSendEndpoint(uri);
                 await endpoint.Send(customer);
                 return Ok();
