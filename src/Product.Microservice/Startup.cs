@@ -38,7 +38,7 @@ namespace Product.Microservice
             #region Swagger
             services.AddSwaggerGen(c =>
             {
-                c.IncludeXmlComments(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Product.Microservice.xml"));
+                // c.IncludeXmlComments(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Product.Microservice.xml"));
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
@@ -52,12 +52,13 @@ namespace Product.Microservice
             {
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
                     {
-                        config.Host(new Uri("rabbitmq://guest:guest@localhost:5672"));
+                        config.Host(new Uri("rabbitmq://guest:guest@microservices_rabbitmq:5672"));
                     }));
             });
             #endregion
 
-            services.AddControllers();
+            services.AddTransient<DbInitialiser>();
+
             services.AddControllers();
         }
 
@@ -83,6 +84,10 @@ namespace Product.Microservice
             {
                 endpoints.MapControllers();
             });
+
+            var services = app.ApplicationServices.CreateScope().ServiceProvider;
+            var initialiser = services.GetRequiredService<DbInitialiser>();
+            initialiser.Run();
         }
     }
 }

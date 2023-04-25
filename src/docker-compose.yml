@@ -1,16 +1,5 @@
 version: '3.5'
 services:
-  customer-microservice:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    image: customer-microservice
-    links:
-      - sqlserver
-      - rabbitmq
-    ports:
-      - 5005:5005
-
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2017-latest
     container_name: microservices_sqlserver
@@ -22,8 +11,37 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.11-management
-    # hostname: "rabbitmq"
     container_name: microservices_rabbitmq
     ports:
       - 5672:5672
       - 15672:15672
+
+  product-microservice:
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    build:
+      context: ./
+      dockerfile: Product.Microservice/Dockerfile
+    image: product-microservice
+    container_name: microservices_product
+    links:
+      - sqlserver
+      - rabbitmq
+    ports:
+      - 5003:5003
+
+  customer-microservice:
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    build:
+      context: ./
+      dockerfile: Customer.Microservice/Dockerfile
+    image: customer-microservice
+    container_name: microservices_customer
+    links:
+      - sqlserver
+      - rabbitmq
+    ports:
+      - 5005:5005

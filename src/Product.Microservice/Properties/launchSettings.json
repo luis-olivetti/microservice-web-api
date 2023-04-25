@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Product.Microservice": {
+    "LocalDev": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

@@ -27,7 +27,7 @@ namespace Product.Microservice.Controllers
         {
             if (customer != null)
             {
-                Uri uri = new Uri("rabbitmq://guest:guest@localhost/fila");
+                Uri uri = new Uri("rabbitmq://guest:guest@microservices_rabbitmq/fila");
                 var endpoint = await _bus.GetSendEndpoint(uri);
                 await endpoint.Send(customer);
                 return Ok();

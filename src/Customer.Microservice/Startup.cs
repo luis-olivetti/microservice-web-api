@@ -63,6 +63,8 @@ namespace Customer.Microservice
                 }));
             });
 
+            services.AddTransient<DbInitialiser>();
+
             services.AddControllers();
         }
 
@@ -88,6 +90,10 @@ namespace Customer.Microservice
             {
                 endpoints.MapControllers();
             });
+
+            var services = app.ApplicationServices.CreateScope().ServiceProvider;
+            var initialiser = services.GetRequiredService<DbInitialiser>();
+            initialiser.Run();
         }
     }
 }
