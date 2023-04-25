@@ -86,3 +86,6 @@ Mensageria:
 https://www.macoratti.net/21/04/net_masstrans1.htm
 
 https://codewithmukesh.com/blog/rabbitmq-with-aspnet-core-microservice/
+
+Executar migrations:
+https://jasontaylor.dev/ef-core-database-initialisation-strategies/

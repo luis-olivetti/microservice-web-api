@@ -45,3 +45,15 @@ services:
       - rabbitmq
     ports:
       - 5005:5005
+
+  gateway:
+    build:
+      context: ./
+      dockerfile: Gateway.WebApi/Dockerfile
+    image: gateway-for-microservice
+    container_name: microservices_gateway
+    links:
+      - sqlserver
+      - rabbitmq
+    ports:
+      - 5007:5007
